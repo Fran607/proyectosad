@@ -12,3 +12,7 @@ apt-get update -y && apt-get autoremove -y
 apt-get install -y net-tools iputils-ping curl tcpdump nmap
 
 echo "Gateway configurado"
+
+sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A POSTROUTING -s 172.1.1.0/24 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 172.2.1.0/24 -o eth0 -j MASQUERADE
